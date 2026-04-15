@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:7.0
+    container_name: campus_marketplace_db
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+      - ./mongo-setup.js:/docker-entrypoint-initdb.d/mongo-setup.js
+    environment:
+      MONGO_INITDB_DATABASE: campus_marketplace
+
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: campus_marketplace_server
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    environment:
+      - NODE_ENV=production
+      - MONGODB_URI=mongodb://mongodb:27017/campus_marketplace
+      - JWT_SECRET=${JWT_SECRET}
+      - CLIENT_URL=http://localhost:3000
+    depends_on:
+      - mongodb
+    volumes:
+      - ./server:/app
+      - /app/node_modules
+
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: campus_marketplace_client
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - REACT_APP_SERVER_URL=http://localhost:5000
+    depends_on:
+      - server
+
+volumes:
+  mongodb_data:

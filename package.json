@@ -1,0 +1,16 @@
+{
+  "name": "campus-marketplace",
+  "version": "1.0.0",
+  "description": "Full-stack MERN Campus Marketplace for students",
+  "scripts": {
+    "install-all": "npm install && cd server && npm install && cd ../client && npm install",
+    "dev": "concurrently \"cd server && npm run dev\" \"cd client && npm start\"",
+    "server": "cd server && npm run dev",
+    "client": "cd client && npm start",
+    "build": "cd client && npm run build",
+    "mongo-setup": "mongosh campus_marketplace mongo-setup.js"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
