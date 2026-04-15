@@ -1,4 +1,4 @@
-# 🎓 CampusMarket — MERN Stack Student Marketplace
+# 🎓 CampusSwap — MERN Stack Student Marketplace
 
 A full-featured campus marketplace where college students can **buy, sell, and exchange** used academic resources. Built with MongoDB, Express, React, and Node.js.
 
